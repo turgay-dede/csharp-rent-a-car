@@ -14,7 +14,7 @@ namespace ConsoleUI
             BrandManager brandManager = new BrandManager(new EfBrandDal());
             UserManager userManager = new UserManager(new EfUserDal());
             RentalManager rentalManager = new RentalManager(new EfRentalDal());
-            foreach (var r in rentalManager.GetAll())
+            foreach (var r in rentalManager.GetAll().Data)
             {
                 Console.WriteLine(r.CarId);
             }
@@ -30,7 +30,7 @@ namespace ConsoleUI
 
         private static void UserTest(UserManager userManager)
         {
-            foreach (var user in userManager.GetAll())
+            foreach (var user in userManager.GetAll().Data)
             {
                 Console.WriteLine(user.FirstName);
             }
@@ -38,7 +38,7 @@ namespace ConsoleUI
 
         private static void BrandTest(BrandManager brandManager)
         {
-            foreach (var brand in brandManager.GetAll())
+            foreach (var brand in brandManager.GetAll().Data)
             {
                 Console.WriteLine(brand.BrandName);
             }
@@ -46,7 +46,7 @@ namespace ConsoleUI
 
         private static void CarTest(CarManager carManager)
         {
-            foreach (var car in carManager.GetCarsByBrandId(2))
+            foreach (var car in carManager.GetCarsByBrandId(2).Data)
             {
                 Console.WriteLine(car.Description);
             }

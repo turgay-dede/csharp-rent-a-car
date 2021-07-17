@@ -27,7 +27,7 @@ namespace DataAccess.Concreate.EntityFramework
                             where c.Id == id
                              select new CarDto
                              {
-                                 CarName = c.Name,
+                                 CarName = c.CarName,
                                  BrandName = b.BrandName,
                                  ColorName = cl.ColorName,
                                  DailyPrice = c.DailyPrice
