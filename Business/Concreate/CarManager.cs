@@ -1,4 +1,7 @@
 ﻿using Business.Abstract;
+using Business.ValidationRules.FluentValidation;
+using Core.Aspects.Autofac.Validation;
+using Core.CrossCuttingConcerns.Validation;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concreate;
@@ -9,6 +12,7 @@ using System.Text;
 
 namespace Business.Concreate
 {
+    [ValidationAspect(typeof(CarValidator), Priority = 1)]
     public class CarManager : ICarService
     {
         ICarDal _carDal;
@@ -18,14 +22,12 @@ namespace Business.Concreate
             _carDal = carDal;
         }
 
+        
         public Result Add(Car car)
         {
-            if (car.CarName.Length > 2 && car.DailyPrice > 0)
-            {
-                _carDal.Add(car);
-                return new SuccessResult();
-            }
-            return new ErrorResult();
+
+            _carDal.Add(car);
+            return new SuccessResult();
 
         }
 

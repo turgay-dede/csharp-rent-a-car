@@ -14,10 +14,18 @@ namespace ConsoleUI
             BrandManager brandManager = new BrandManager(new EfBrandDal());
             UserManager userManager = new UserManager(new EfUserDal());
             RentalManager rentalManager = new RentalManager(new EfRentalDal());
-            foreach (var r in rentalManager.GetAll().Data)
+            var result = rentalManager.Add(new Entities.Concreate.Rental { CarId = 1, CustomerId = 2, RentDate = DateTime.Now });
+            if (result.Success)
             {
-                Console.WriteLine(r.CarId);
+                Console.WriteLine(result.Message);
+            }else
+            {
+                Console.WriteLine(result.Message);
             }
+            //foreach (var r in rentalManager.GetAll().Data)
+            //{
+            //    Console.WriteLine(r.CarId);
+            //}
           
             
 

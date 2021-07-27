@@ -19,8 +19,16 @@ namespace Business.Concreate
 
         public Result Add(Rental rental)
         {
-            _rentalDal.Add(rental);
-            return new SuccessResult();
+           
+            if ( _rentalDal.GetAll(r=>r.CarId==rental.CarId).FindLast(f=>f.CarId==rental.CarId).ReturnDate!=null )
+            {
+                _rentalDal.Add(rental);
+                return new SuccessResult("Araç kiralandı");
+            }
+
+            return new ErrorResult("Araç boşta değil");
+
+
         }
 
         public Result Delete(Rental rental)
