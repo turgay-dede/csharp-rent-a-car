@@ -1,5 +1,8 @@
 using Business.Abstract;
 using Business.Concreate;
+using Core.DependencyResolvers;
+using Core.Extensions;
+using Core.IoC;
 using DataAccess.Abstract;
 using DataAccess.Concreate.EntityFramework;
 using Microsoft.AspNetCore.Builder;
@@ -32,6 +35,10 @@ namespace WebAPI
             services.AddControllers();
             //services.AddSingleton<ICarService,CarManager>();
             //services.AddSingleton<ICarDal,EfCarDal>();
+            services.AddDependencyResolvers(new ICoreModule[]
+            {
+                new CoreModule(),
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
