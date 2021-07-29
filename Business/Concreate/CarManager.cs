@@ -1,5 +1,6 @@
 ﻿using Business.Abstract;
 using Business.ValidationRules.FluentValidation;
+using Core.Aspects.Autofac.Caching;
 using Core.Aspects.Autofac.Validation;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
@@ -47,7 +48,7 @@ namespace Business.Concreate
         {
             return new SuccessDataResult<CarDto>(_carDal.GetByCarDetails(id));
         }
-
+        [CacheAspect(duration:1)]
         public DataResult<List<Car>> GetCarsByBrandId(int brandId)
         {
             return new SuccessDataResult<List<Car>>(_carDal.GetAll(c => c.BrandId == brandId));
