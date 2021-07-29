@@ -1,4 +1,7 @@
 ﻿using Business.Abstract;
+using Business.ValidationRules.FluentValidation;
+using Core.Aspects.Autofac.Caching;
+using Core.Aspects.Autofac.Validation;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concreate;
@@ -17,6 +20,8 @@ namespace Business.Concreate
             _rentalDal = rentalDal;
         }
 
+        [ValidationAspect(typeof(RentalValidator))]
+        [CacheRemoveAspect("IRentalService.Get")]
         public Result Add(Rental rental)
         {
            
@@ -31,23 +36,27 @@ namespace Business.Concreate
 
         }
 
+        [CacheRemoveAspect("IRentalService.Get")]
         public Result Delete(Rental rental)
         {
             _rentalDal.Delete(rental);
             return new SuccessResult();
         }
 
-
+        [CacheAspect]
         public DataResult<List<Rental>> GetAll()
         {
             return new SuccessDataResult<List<Rental>>(_rentalDal.GetAll());
         }
 
+        [CacheAspect]
         public DataResult<Rental> GetById(int id)
         {
             return new SuccessDataResult<Rental>(_rentalDal.Get(r => r.Id == id));
         }
 
+        [ValidationAspect(typeof(RentalValidator))]
+        [CacheRemoveAspect("IRentalService.Get")]
         public Result Update(Rental rental)
         {
             _rentalDal.Update(rental);

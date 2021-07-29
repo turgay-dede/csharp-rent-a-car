@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Business.Concreate
 {
-    [ValidationAspect(typeof(CarValidator), Priority = 1)]
+
     public class CarManager : ICarService
     {
         ICarDal _carDal;
@@ -20,14 +20,15 @@ namespace Business.Concreate
             _carDal = carDal;
         }
 
+        [ValidationAspect(typeof(CarValidator), Priority = 1)]
+        [CacheRemoveAspect("ICarService.Get")]
         public Result Add(Car car)
         {
-
             _carDal.Add(car);
             return new SuccessResult();
-
         }
 
+        [CacheRemoveAspect("ICarService.Get")]
         public Result Delete(Car car)
         {
             _carDal.Delete(car);
@@ -38,27 +39,29 @@ namespace Business.Concreate
         {
             return new SuccessDataResult<Car>(_carDal.Get(c => c.Id == id));
         }
-
+        [CacheAspect]
         public DataResult<List<Car>> GetAll()
         {
             return new SuccessDataResult<List<Car>>(_carDal.GetAll());
         }
-
+        [CacheAspect]
         public DataResult<CarDto> GetByCarDetails(int id)
         {
             return new SuccessDataResult<CarDto>(_carDal.GetByCarDetails(id));
         }
-        [CacheAspect(duration:1)]
+        [CacheAspect(duration: 1)]
         public DataResult<List<Car>> GetCarsByBrandId(int brandId)
         {
             return new SuccessDataResult<List<Car>>(_carDal.GetAll(c => c.BrandId == brandId));
         }
-
+        [CacheAspect]
         public DataResult<List<Car>> GetCarsByColorId(int colorId)
         {
             return new SuccessDataResult<List<Car>>(_carDal.GetAll(c => c.ColorId == colorId));
         }
 
+        [ValidationAspect(typeof(CarValidator), Priority = 1)]
+        [CacheRemoveAspect("ICarService.Get")]
         public Result Update(Car car)
         {
             _carDal.Update(car);
