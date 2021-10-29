@@ -2,12 +2,11 @@
 using Business.ValidationRules.FluentValidation;
 using Core.Aspects.Autofac.Caching;
 using Core.Aspects.Autofac.Validation;
+using Core.Entities.Concreate;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
-using Entities.Concreate;
-using System;
 using System.Collections.Generic;
-using System.Text;
+
 
 namespace Business.Concreate
 {
@@ -43,6 +42,16 @@ namespace Business.Concreate
         public DataResult<User> GetById(int id)
         {
             return new SuccessDataResult<User>(_userDal.Get(u => u.Id == id));
+        }
+
+        public User GetByMail(string email)
+        {
+            return _userDal.Get(x => x.Email == email);
+        }
+
+        public List<OperationClaim> GetClaims(User user)
+        {
+            return _userDal.GetOperationClaims(user);
         }
 
         [ValidationAspect(typeof(UserValidator))]

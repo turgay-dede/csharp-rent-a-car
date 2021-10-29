@@ -1,4 +1,5 @@
 ﻿using Business.Abstract;
+using Business.BusinessAspects.Autofac;
 using Business.ValidationRules.FluentValidation;
 using Core.Aspects.Autofac.Caching;
 using Core.Aspects.Autofac.Validation;
@@ -22,6 +23,7 @@ namespace Business.Concreate
 
         [ValidationAspect(typeof(CarValidator), Priority = 1)]
         [CacheRemoveAspect("ICarService.Get")]
+        [SecuredOperation("admin")]
         public Result Add(Car car)
         {
             _carDal.Add(car);
