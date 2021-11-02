@@ -32,10 +32,22 @@ namespace WebAPI.Controllers
             return Ok(_carService.Add(car));
         }
 
-        [HttpGet("getbybrandid")]
-        public IActionResult GetByBrandId(int id)
+        [HttpGet("getbybrand")]
+        public IActionResult GetByBrand(string brandName)
         {
-            return Ok(_carService.GetCarsByBrandId(id));
+            return Ok(_carService.GetCarsByBrandName(brandName));
+        }
+
+        [HttpGet("getbycolor")]
+        public IActionResult GetByColorId(string colorName)
+        {
+            return Ok(_carService.GetCarsByColorName(colorName));
+        }
+
+        [HttpGet("getbydetail")]
+        public IActionResult GetByCarDetail(int id)
+        {
+            return Ok(_carService.GetByCarDetails(id));
         }
     }
 }
